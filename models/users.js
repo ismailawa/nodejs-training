@@ -1,10 +1,11 @@
 const conn = require('../helpers/connection');
 
 module.exports = {
+ 
   create: (body, callback) => {
     const values = Object.values(body);
     conn.query(
-      'INSERT INTO users(name,email,phone,address) VALUES (?,?,?,?)',
+      'INSERT INTO users§(name,email,phone,address) VALUES (?,?,?,?)',
       values,
       (err, result) => {
         if (err) {
@@ -15,6 +16,7 @@ module.exports = {
       }
     );
   },
+  
   find: (callback) => {
     conn.query('SELECT * FROM users', (err, res) => {
       if (err) {
