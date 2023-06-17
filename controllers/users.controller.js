@@ -2,11 +2,15 @@ const users = require('../models/users');
 
 module.exports = {
   create: (req, res) => {
-    res.status(201).json(users.create(req.body));
+    users.create(req.body, (result, error) => {
+      res.status(201).json(result);
+    });
   },
 
   getAll: (req, res) => {
-    res.status(200).json(users.find());
+    users.find((result) => {
+      res.status(200).json(result);
+    });
   },
 
   getOne: (req, res) => {
