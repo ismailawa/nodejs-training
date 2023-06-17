@@ -1,20 +1,3 @@
-let data = [
-  {
-    id: 1,
-    name: 'idi mohammed',
-    email: 'idi@gmail.com',
-    phone: '123-456-565',
-    address: 'katako laranto',
-  },
-  {
-    id: 2,
-    name: 'mohd mohammed',
-    email: 'mohd@gmail.com',
-    phone: '023-456-865',
-    address: 'bauchi road',
-  },
-];
-
 const conn = require('../helpers/connection');
 
 module.exports = {
@@ -25,36 +8,50 @@ module.exports = {
       values,
       (err, result) => {
         if (err) {
-          callback(null, err);
+          callback(err, null);
         } else {
-          callback(result);
+          callback(null, result);
         }
       }
     );
   },
   find: (callback) => {
-    let users;
     conn.query('SELECT * FROM users', (err, res) => {
       if (err) {
-        callback(null, err);
+        callback(err, null);
       } else {
-        callback(res);
+        callback(null, res);
       }
     });
   },
-  findOne: (id) => data.filter((user) => user.id === id)[0],
-  update: (id, body) => {
-    const user = data.filter((user) => user.id === id)[0];
-    const indexOfUser = data.indexOf(user);
-    const newUser = { ...user, ...body };
-    data[indexOfUser] = newUser;
-    return newUser;
+
+  findOne: (id, callback) => {
+    conn.query('SELECT * FROM users WHERE id = ?', id, (err, res) => {
+      if (err) {
+        callback(err, null);
+      } else {
+        callback(null, res);
+      }
+    });
   },
 
-  delete: (id) => {
-    data = data.filter((user) => user.id !== id);
-    return {
-      delete: true,
-    };
+  update: (id, body, callback) => {
+    conn.query('UPDATE users SET ? WHERE id = ?', [body, id], (error, res) => {
+      if (error) {
+        callback(error, null);
+      } else {
+        callback(null, res);
+      }
+    });
+  },
+
+  delete: (id, callback) => {
+    conn.query('DELETE FROM users WHERE id = ?', id, (error, res) => {
+      if (error) {
+        callback(error, null);
+      } else {
+        callback(null, res);
+      }
+    });
   },
 };
