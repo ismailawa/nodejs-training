@@ -15,13 +15,33 @@ let data = [
   },
 ];
 
+const conn = require('../helpers/connection');
+
 module.exports = {
-  create: (body) => {
-    const user = { id: data.length + 1, ...body };
-    data.push(user);
-    return user;
+  create: (body, callback) => {
+    const values = Object.values(body);
+    conn.query(
+      'INSERT INTO users(name,email,phone,address) VALUES (?,?,?,?)',
+      values,
+      (err, result) => {
+        if (err) {
+          callback(null, err);
+        } else {
+          callback(result);
+        }
+      }
+    );
   },
-  find: () => data,
+  find: (callback) => {
+    let users;
+    conn.query('SELECT * FROM users', (err, res) => {
+      if (err) {
+        callback(null, err);
+      } else {
+        callback(res);
+      }
+    });
+  },
   findOne: (id) => data.filter((user) => user.id === id)[0],
   update: (id, body) => {
     const user = data.filter((user) => user.id === id)[0];
