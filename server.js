@@ -1,6 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 
+const conn = require('./helpers/connection');
+
 // initialise the express server
 const app = express();
 
