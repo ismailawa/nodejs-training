@@ -1,12 +1,14 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+
+// initialise the express server
 const app = express();
 
+// register middlewares
 app.use(bodyParser.urlencoded({ extended: true }));
-
 app.use(bodyParser.json());
 
-//This is where you write your codes
+// Register routers
 require('./routes/users.routes')(app);
 
 //This wheee you run the server
