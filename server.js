@@ -12,6 +12,7 @@ app.use(bodyParser.json());
 
 // Register routers
 require('./routes/users.routes')(app);
+require('./routes/courses.routes')(app);
 
 //This wheee you run the server
 app.listen(3000, () => {
