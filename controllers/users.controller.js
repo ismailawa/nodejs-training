@@ -11,9 +11,7 @@ module.exports = {
   },
 
   getAll: async (req, res) => {
-    console.log('i was in the controller');
     const response = await users.find();
-
     if (response.error) {
       return res.status(400).json(response.error.message);
     } else {
