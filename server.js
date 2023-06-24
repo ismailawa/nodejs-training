@@ -1,14 +1,15 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 
-const conn = require('./helpers/connection');
-
 // initialise the express server
 const app = express();
 
 // register middlewares
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+
+//connect to database
+require('./helpers/connection')();
 
 // Register routers
 require('./routes/users.routes')(app);
