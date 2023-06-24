@@ -19,4 +19,37 @@ module.exports = {
       res.status(200).json(response.result);
     }
   },
+
+  getOne: async (req, res) => {
+    const response = await usersService.findOne(+req.params.id);
+    if (response.error) {
+      return res.status(400).json(response.error.message);
+    } else {
+      console.log(response.result);
+      res.status(200).json(response.result);
+    }
+  },
+
+  update: async (req, res) => {
+    const id = +req.params.id;
+    const body = req.body;
+    const response = await usersService.update(+req.params.id, body);
+    if (response.error) {
+      return res.status(400).json(response.error.message);
+    } else {
+      console.log(response.result);
+      res.status(200).json(response.result);
+    }
+  },
+
+  delete: async (req, res) => {
+    const id = +req.params.id;
+    const response = await usersService.delete(id);
+    if (response.error) {
+      return res.status(400).json(response.error.message);
+    } else {
+      console.log(response.result);
+      res.status(200).json(response.result);
+    }
+  },
 };

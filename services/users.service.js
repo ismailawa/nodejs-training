@@ -18,33 +18,30 @@ module.exports = {
     }
   },
 
-  //   findOne: (id, callback) => {
-  //     conn.query('SELECT * FROM users WHERE id = ?', id, (err, res) => {
-  //       if (err) {
-  //         callback(err, null);
-  //       } else {
-  //         callback(null, res);
-  //       }
-  //     });
-  //   },
+  findOne: async (id) => {
+    try {
+      const user = await User.findOne({ where: { id: id } });
+      return { result: user };
+    } catch (error) {
+      return { error };
+    }
+  },
 
-  //   update: (id, body, callback) => {
-  //     conn.query('UPDATE users SET ? WHERE id = ?', [body, id], (error, res) => {
-  //       if (error) {
-  //         callback(error, null);
-  //       } else {
-  //         callback(null, res);
-  //       }
-  //     });
-  //   },
+  update: async (id, body) => {
+    try {
+      const user = await User.update(body, { where: { id: id } });
+      return { result: user };
+    } catch (error) {
+      return { error };
+    }
+  },
 
-  //   delete: (id, callback) => {
-  //     conn.query('DELETE FROM users WHERE id = ?', id, (error, res) => {
-  //       if (error) {
-  //         callback(error, null);
-  //       } else {
-  //         callback(null, res);
-  //       }
-  //     });
-  //   },
+  delete: async (id) => {
+    try {
+      const user = await User.destroy({ where: { id: id } });
+      return { result: user };
+    } catch (error) {
+      return { error };
+    }
+  },
 };
