@@ -1,30 +1,29 @@
 const conn = require('../helpers/connection');
 
 module.exports = {
- 
-  create: (body, callback) => {
-    const values = Object.values(body);
-    conn.query(
-      'INSERT INTO users§(name,email,phone,address) VALUES (?,?,?,?)',
-      values,
-      (err, result) => {
-        if (err) {
-          callback(err, null);
-        } else {
-          callback(null, result);
-        }
-      }
-    );
+  create: async (body) => {
+    try {
+      const db = await conn();
+      const values = Object.values(body);
+      const result = await db.query(
+        'INSERT INTO users(name,email,phone,address) VALUES (?,?,?,?)',
+        values
+      );
+      return { result };
+    } catch (error) {
+      return { error };
+    }
   },
-  
-  find: (callback) => {
-    conn.query('SELECT * FROM users', (err, res) => {
-      if (err) {
-        callback(err, null);
-      } else {
-        callback(null, res);
-      }
-    });
+
+  find: async () => {
+    try {
+      const db = await conn();
+      const [rows, fields] = await db.query('SELECT * FROM users');
+
+      return { result: rows };
+    } catch (error) {
+      return { error };
+    }
   },
 
   findOne: (id, callback) => {
