@@ -33,7 +33,7 @@ module.exports = {
   update: async (req, res) => {
     const id = +req.params.id;
     const body = req.body;
-    const response = await usersService.update(+req.params.id, body);
+    const response = await usersService.update(id, body);
     if (response.error) {
       return res.status(400).json(response.error.message);
     } else {
