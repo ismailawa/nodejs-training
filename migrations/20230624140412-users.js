@@ -17,11 +17,21 @@ module.exports = {
       },
       email: {
         type: Sequelize.STRING,
+        unique: true,
       },
       phone: {
         type: Sequelize.STRING,
       },
       address: {
+        type: Sequelize.STRING,
+      },
+      password: {
+        type: Sequelize.STRING,
+      },
+      dob: {
+        type: Sequelize.DATE,
+      },
+      profileImage: {
         type: Sequelize.STRING,
       },
       createdAt: {
