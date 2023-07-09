@@ -1,4 +1,5 @@
-const auth = require('../middleware/auth');
+const passport = require('passport');
+
 module.exports = (app) => {
   const router = require('express').Router();
   const controller = require('../controllers/users.controller');
@@ -7,13 +8,29 @@ module.exports = (app) => {
 
   router.post('/login', controller.login);
 
-  router.get('/', auth, controller.getAll);
+  router.get(
+    '/',
+    passport.authenticate('jwt', { session: false }),
+    controller.getAll
+  );
 
-  router.get('/:id', auth, controller.getOne);
+  router.get(
+    '/:id',
+    passport.authenticate('jwt', { session: false }),
+    controller.getOne
+  );
 
-  router.put('/:id', auth, controller.update);
+  router.put(
+    '/:id',
+    passport.authenticate('jwt', { session: false }),
+    controller.update
+  );
 
-  router.delete('/:id', auth, controller.delete);
+  router.delete(
+    '/:id',
+    passport.authenticate('jwt', { session: false }),
+    controller.delete
+  );
 
   app.use('/api/users', router);
 };
